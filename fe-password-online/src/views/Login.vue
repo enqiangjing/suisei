@@ -1,7 +1,6 @@
 <template>
   <div class="login">
-    <h1>This is an login page</h1>
-    <Box msg="登录" />
+    <Box />
   </div>
 </template>
 
@@ -16,3 +15,13 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+@bg-s: center;
+
+.login {
+  height: 100%;
+  width: 100%;
+  background: url(../assets/logo.png) no-repeat top center;
+}
+</style>
