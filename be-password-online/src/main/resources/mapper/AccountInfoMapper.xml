@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.po.passwordonline.mapper.AccountInfoMapper">
+    <!-- 此处与接口方法名对应 指定参数类型与返回结果类型-->
+    <select id="getAccountsList" parameterType="String" resultType="com.po.passwordonline.model.AccountInfo">
+        select *
+        from account_info
+        <where>
+            <if test="id!=null and id!=0">
+                id=#{id}
+            </if>
+            <if test="userName!=null and !''.equals(userName)">
+                and userName=#{userName}
+            </if>
+            <if test="systemName!=null and !''.equals(systemName)">
+                and systemName=#{systemName}
+            </if>
+            <if test="account!=null and !''.equals(account)">
+                and `account`=#{account}
+            </if>
+            <if test="password!=null and !''.equals(password)">
+                and `password`=#{password}
+            </if>
+            <if test="extra!=null and !''.equals(extra)">
+                and extra=#{extra}
+            </if>
+            <if test="status!=null and status!=0">
+                and `status`=#{status}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertData" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.po.passwordonline.model.AccountInfo">
+        insert into account_info(id, userName, systemName, account, password, extra, status)
+        VALUES (null, #{userName}, #{systemName}, #{account}, #{password}, #{extra}, #{status});
+    </insert>
+
+    <update id="upDateInfo" parameterType="com.po.passwordonline.model.AccountInfo">
+        update account_info
+        <set>
+            <if test="userName!=null and !''.equals(userName)">
+                userName=#{userName},
+            </if>
+            <if test="systemName!=null and !''.equals(systemName)">
+                systemName=#{systemName},
+            </if>
+            <if test="account!=null and !''.equals(account)">
+                `account`=#{account},
+            </if>
+            <if test="password!=null and !''.equals(password)">
+                `password`=#{password},
+            </if>
+            <if test="extra!=null and !''.equals(extra)">
+                extra=#{extra},
+            </if>
+            <if test="status!=null and status!=0">
+                `status`=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,53 @@
+### port ###
+server.port=9602
+### log config ###
+logging.config=classpath:conf/log4j2-spring.xml
+### dateBase ###
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/password_online?useUnicode=true&characterEncoding=utf8&useSSL=false
+spring.datasource.username=username
+spring.datasource.password=password
+### mybatis ###
+mybatis.mapper-locations=classpath:mapper/*.xml
+### redis ###
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+spring.redis.password=password
+spring.redis.jedis.pool.max-idle=8
+spring.redis.jedis.pool.min-idle=0
+spring.redis.jedis.pool.max-active=8
+spring.redis.jedis.pool.max-wait=-1
+spring.redis.timeout=3000
+### fileUp ###
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+#################
+### thymeleaf ###
+#################
+#开启模板缓存（默认值：true）
+spring.thymeleaf.cache=false
+#Check that the template exists before rendering it.
+spring.thymeleaf.check-template=true
+#检查模板位置是否正确(默认值:true)
+spring.thymeleaf.check-template-location=true
+#Content-Type的值 默认值：text/html
+spring.thymeleaf.servlet.content-type=text/html
+#开启MVC Thymeleaf视图解析(默认值：true)
+spring.thymeleaf.enabled=true
+#模板编码
+spring.thymeleaf.encoding=UTF-8
+#要被排除在解析之外的视图名称列表，用逗号分隔
+spring.thymeleaf.excluded-view-names=
+#要运用于模板之上的模板模式。另见StandardTemplate-ModeHandlers(默认值：HTML5)
+spring.thymeleaf.mode=HTML
+#在构建URL时添加到视图名称前的前缀（默认值：classpath:/templates/）
+spring.thymeleaf.prefix=classpath:/webapp/dist/
+#在构建URL时添加到视图名称后的后缀（默认值：.html）
+spring.thymeleaf.suffix=.html
+##################
+### 静态资源配置 ###
+##################
+#静态资源访问路径
+spring.mvc.static-path-pattern=/*
+#静态资源映射路径
+spring.resources.static-locations=classpath:/webapp/dist/,classpath:/templates/

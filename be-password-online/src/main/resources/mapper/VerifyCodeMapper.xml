@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.po.passwordonline.mapper.VerifyCodeMapper">
+    <!-- 此处与接口方法名对应 指定参数类型与返回结果类型-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.po.passwordonline.model.VerifyCode">
+        select *
+        from so_verify_code
+        where id = #{id}
+    </select>
+
+    <select id="insertCode" parameterType="com.po.passwordonline.model.VerifyCode"
+            resultType="com.po.passwordonline.model.VerifyCode">
+        insert into so_verify_code
+        values (null, #{findIp}, #{addTime}, #{codeValue}, '0')
+    </select>
+
+    <select id="findByIpAndTime" parameterType="String" resultType="com.po.passwordonline.model.VerifyCode">
+        select *
+        from so_verify_code
+        where findIp = #{findIp}
+        order by addTime desc
+        limit 1;
+    </select>
+
+    <select id="updateStatus" parameterType="java.lang.Integer" resultType="com.po.passwordonline.model.VerifyCode">
+        update so_verify_code
+        set status = '1'
+        where id = #{id}
+    </select>
+</mapper>
