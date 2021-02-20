@@ -1,14 +1,14 @@
 <template>
-  <div class="box cc-display">
+  <div class="box ce-display">
     <div class="outside">
       <div class="top cc-display">
         <img src="@/assets/img/login/user.svg" alt="top" />
       </div>
       <div class="item cs-display">
-        <LoginInput type="email" class="input" />
+        <LoginInput type="email" class="input" v-model="userName" />
       </div>
       <div class="item cs-display">
-        <LoginInput type="password" class="input" />
+        <LoginInput type="password" class="input" v-model="password" />
       </div>
       <div class="item cc-display">
         <Button @click="fnLogin">登录</Button>
@@ -21,6 +21,7 @@
 import LoginInput from "@/components/common/LoginInput.vue";
 import Button from "@/components/common/Button.vue";
 import { post_ } from "@/http/api.js";
+import { localStore, localData } from "@/http/store.js";
 
 export default {
   name: "Box",
@@ -31,14 +32,31 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return { userName: "", password: "" };
+  },
   methods: {
+    // 登录请求发送
     fnLogin() {
-      console.log("1");
+      let userName = this.userName;
+      if (userName === "") {
+        this.$message.run("用户名未输入！", "warning");
+        return;
+      }
+      let password = this.password;
+      if (password === "") {
+        this.$message.run("密码未输入！", "warning");
+        return;
+      }
       post_("login", {
         userName: "jing",
         password: "jing",
       }).then((res) => {
-        console.log(res);
+        // 用户信息挂载到全局
+        localStore("user", res);
+        this.$user = res;
+        // 路由跳转
+        this.$router.push("/home/" + res.userName + "/main");
       });
     },
   },

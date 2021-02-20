@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.po.passwordonline.mapper.AccountInfoMapper">
     <!-- 此处与接口方法名对应 指定参数类型与返回结果类型-->
-    <select id="getAccountsList" parameterType="String" resultType="com.po.passwordonline.model.AccountInfo">
+    <select id="getAccountsList" parameterType="com.po.passwordonline.model.AccountInfo"
+            resultType="com.po.passwordonline.model.AccountInfo">
         select *
         from account_info
         <where>
@@ -60,4 +61,11 @@
         </set>
         where id=#{id}
     </update>
+
+    <select id="getAccountsListLike" parameterType="String" resultType="com.po.passwordonline.model.AccountInfo">
+        select *
+        from account_info
+        where username = #{aLike}
+          and status = 1
+    </select>
 </mapper>

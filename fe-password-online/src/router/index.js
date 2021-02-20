@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
+// 路由模式
 const routes = [
   {
     path: '/',
@@ -49,10 +50,19 @@ const routes = [
   }
 ]
 
+// 初始化路由对象
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  // ...
+  console.log(to);
+  console.log(from);
+  next();
 })
 
 export default router

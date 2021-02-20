@@ -46,7 +46,7 @@ public class AccountInfoController {
      */
     @RequestMapping("getList")
     @ResponseBody
-    public String main(HttpServletRequest request, @RequestBody AccountInfo accountInfo) {
+    public String getList(HttpServletRequest request, @RequestBody AccountInfo accountInfo) {
         // 参数
         ResMessage resMessage = new ResMessage();
 
@@ -56,6 +56,29 @@ public class AccountInfoController {
 
         List<AccountInfo> accountInfoList = accountInfoMapper.getAccountsList(accountInfo);
         log.info(users[1]);
+        return resMessage.sysSuccess(accountInfoList);
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param request     请求信息
+     * @param accountInfo 查询条件
+     * @return 返回结果值
+     * @apiNote 登录入口
+     */
+    @RequestMapping("getListLike")
+    @ResponseBody
+    public String getListLike(HttpServletRequest request, @RequestBody AccountInfo accountInfo) {
+        // 参数
+        ResMessage resMessage = new ResMessage();
+
+        HttpSession session = request.getSession(); // 获取浏览器Session
+        String userInfo = (String) session.getAttribute("userInfo"); // 取的userInfo中的用户信息
+        String[] users = userInfo.split(",");
+
+        List<AccountInfo> accountInfoList = accountInfoMapper.getAccountsListLike(users[1]);
+
         return resMessage.sysSuccess(accountInfoList);
     }
 

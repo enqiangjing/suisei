@@ -10,6 +10,8 @@ public interface AccountInfoMapper {
 
     List<AccountInfo> getAccountsList(AccountInfo accountInfo);
 
+    List<AccountInfo> getAccountsListLike(String aLike);
+
     void insertData(AccountInfo accountInfo);
 
     void upDateInfo(AccountInfo accountInfo);

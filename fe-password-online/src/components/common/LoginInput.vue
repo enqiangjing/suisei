@@ -3,7 +3,12 @@
     <div class="cc-display">
       <img :src="src" alt="email.ico" />
     </div>
-    <input :type="iType" class="pbm0 border-none ls-2 fs-16" />
+    <input
+      :type="iType"
+      class="pbm0 border-none ls-2 fs-16"
+      :value="value"
+      @input="$emit('v_input', $event.target.value)"
+    />
   </div>
 </template>
 
@@ -14,9 +19,8 @@ let srcSrarch = () => import("@/assets/img/login/search.svg");
 
 export default {
   name: "LoginInput",
-  props: {
-    type: String,
-  },
+  props: ["type", "value"],
+  model: { prop: "value", event: "v_input" },
   data(props) {
     return {
       src: "",

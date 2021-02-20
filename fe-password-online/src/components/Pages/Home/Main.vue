@@ -5,25 +5,25 @@
         <div class="item cc-display">
           <div class="left ec-display">系统名：</div>
           <div class="right sc-display">
-            qq<img src="@/assets/img/home/copy.svg" />
+            {{ item.systemName }}<img src="@/assets/img/home/copy.svg" />
           </div>
         </div>
         <div class="item cc-display">
-          <div class="left ec-display">系统名：</div>
+          <div class="left ec-display">用户号：</div>
           <div class="right sc-display">
-            qq<img src="@/assets/img/home/copy.svg" />
+            {{ item.account }}<img src="@/assets/img/home/copy.svg" />
           </div>
         </div>
         <div class="item cc-display">
-          <div class="left ec-display">系统名：</div>
+          <div class="left ec-display">密码：</div>
           <div class="right sc-display">
-            qq<img src="@/assets/img/home/copy.svg" />
+            {{ item.password }}<img src="@/assets/img/home/copy.svg" />
           </div>
         </div>
         <div class="item cc-display">
-          <div class="left ec-display">系统名：</div>
+          <div class="left ec-display">其他信息：</div>
           <div class="right sc-display">
-            qq<img src="@/assets/img/home/copy.svg" />
+            {{ item.extra }}<img src="@/assets/img/home/copy.svg" />
           </div>
         </div>
       </li>
@@ -34,13 +34,19 @@
 <script>
 export default {
   name: "Content",
-  props: {
-    msg: String,
-  },
+  props: ["msgList"],
   data() {
     return {
-      list: [1, 1, 1],
+      list: [],
     };
+  },
+  created() {
+    this.list = this.msgList;
+  },
+  watch: {
+    msgList(newVal) {
+      this.list = newVal;
+    },
   },
 };
 </script>
