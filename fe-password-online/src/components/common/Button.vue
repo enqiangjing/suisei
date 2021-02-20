@@ -1,5 +1,8 @@
 <template>
-  <button :class="[bType, 'fs-18', 'fw-2', 'ls-2', 'br-4', 'cc-display']">
+  <button
+    :class="[bType, 'fs-18', 'fw-2', 'ls-2', 'br-4', 'cc-display']"
+    @click="$emit('click')"
+  >
     <slot></slot>
   </button>
 </template>

@@ -11,7 +11,7 @@
         <LoginInput type="password" class="input" />
       </div>
       <div class="item cc-display">
-        <Button>登录</Button>
+        <Button @click="fnLogin">登录</Button>
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@
 <script>
 import LoginInput from "@/components/common/LoginInput.vue";
 import Button from "@/components/common/Button.vue";
+import { post_ } from "@/http/api.js";
 
 export default {
   name: "Box",
@@ -29,6 +30,17 @@ export default {
   },
   props: {
     msg: String,
+  },
+  methods: {
+    fnLogin() {
+      console.log("1");
+      post_("login", {
+        userName: "jing",
+        password: "jing",
+      }).then((res) => {
+        console.log(res);
+      });
+    },
   },
 };
 </script>
