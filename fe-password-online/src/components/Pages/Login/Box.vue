@@ -59,8 +59,8 @@ export default {
         return;
       }
       post_("login", {
-        userName: "jing",
-        password: "jing",
+        userName: this.userName,
+        password: this.password,
       }).then((res) => {
         // 用户信息挂载到全局
         localStore("user", res);

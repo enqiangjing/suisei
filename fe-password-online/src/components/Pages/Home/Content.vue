@@ -70,10 +70,8 @@ export default {
     };
   },
   created() {
-    console.log(this.$route);
     if (this.$route.name === "HomeContentEdit") {
       let itemInfo = sessionData("editItem");
-      console.log(sessionData("editItem"));
       this.systemName = itemInfo.systemName;
       this.account = itemInfo.account;
       this.password = itemInfo.password;
@@ -108,9 +106,7 @@ export default {
         sendData.id = this.id;
         sendUrl = "api/upDateInfo";
       }
-      post_(this.$baseUrl + sendUrl, sendData).then((res) => {
-        console.log(res);
-      });
+      post_(this.$baseUrl + sendUrl, sendData);
     },
   },
 };

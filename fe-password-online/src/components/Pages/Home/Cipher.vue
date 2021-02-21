@@ -97,7 +97,6 @@ export default {
     fnUse() {
       if (fnKeyRead(this, "privateKey") === "")
         return (this.privateKeyMsg = "私钥文件未在本地缓存，请选取文件！");
-      console.log(fnKeyRead(this, "privateKey"));
       return (this.privateKeyMsg = "私钥文件已加载，可正常使用！");
     },
 

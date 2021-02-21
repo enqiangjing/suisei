@@ -56,13 +56,6 @@ const router = new VueRouter({
 //   console.log(to);
 //   // console.log(from);
 //   // next();
-//   if (to.name === 'Login') {
-//     next(vm => {
-//       console.log(vm.$user);
-//     })
-//   } else {
-//     next()
-//   }
 // })
 
 export default router
