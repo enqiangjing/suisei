@@ -35,7 +35,7 @@
 
 > 主页展示：
 
-![alt 主页面](z-pictures/option/logo.png)  
+![alt 主页面](../main/z-pictures/option/logo.png)  
 ![alt 主页面](z-pictures/option/mainShow.png)
 
 </br>
