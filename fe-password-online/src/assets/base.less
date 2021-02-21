@@ -1,3 +1,5 @@
+@font-family: webfont !important;
+
 // ------ 样式初始化 ------
 //
 html,
@@ -16,6 +18,40 @@ body {
   height: 100%;
   min-height: 800px;
   overflow: hidden;
+}
+
+@font-face {
+  font-family: "webfont";
+  font-display: swap;
+  src: url("font/alph/webfont.eot"); /* IE9 */
+  src: url("font/alph/webfont.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("font/alph/webfont.woff2") format("woff2"),
+    url("font/alph/webfont.woff") format("woff"),
+    /* chrome、firefox */ url("font/alph/webfont.ttf") format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("font/alph/webfont.svg#webfont") format("svg"); /* iOS 4.1- */
+}
+
+@font-face {
+  font-family: "webfont2";
+  font-display: swap;
+  src: url("font/alph/webfont.eot"); /* IE9 */
+  src: url("font/alph/webfont.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("font/alph/webfont.woff2") format("woff2"),
+    url("font/alph/webfont.woff") format("woff"),
+    /* chrome、firefox */ url("font/alph/webfont.ttf") format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("font/alph/webfont.svg#webfont") format("svg"); /* iOS 4.1- */
+}
+
+// ------过渡动画------
+//
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 //  ------ 全局通用 ------
@@ -63,29 +99,42 @@ body {
 }
 
 .common-bg-r85 {
-  background-color: rgba(242, 246, 252, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.color-fff {
+  color: #fff;
+}
+
+.color-primary {
+  color: #409eff;
 }
 
 // ------ 全局通用::字体大小 ------
 //
 .fs-20 {
   font-size: 20px;
+  font-family: @font-family;
 }
 
 .fs-18 {
   font-size: 18px;
+  font-family: @font-family;
 }
 
 .fs-16 {
   font-size: 16px;
+  font-family: @font-family;
 }
 
 .fs-14 {
   font-size: 14px;
+  font-family: @font-family;
 }
 
 .fs-12 {
   font-size: 12px;
+  font-family: @font-family;
 }
 
 // ------全局通用::字体宽度
@@ -104,6 +153,10 @@ body {
 
 // ------全局铜通用::字间距------
 //
+.ls-8 {
+  letter-spacing: 8px;
+}
+
 .ls-6 {
   letter-spacing: 6px;
 }

@@ -8,4 +8,26 @@
         where userName = #{userName}
           and password = #{password}
     </select>
+
+    <update id="upDateUser" parameterType="com.po.passwordonline.model.Users">
+        update users
+        <set>
+            <if test="password!=null and !''.equals(password)">
+                password=#{password},
+            </if>
+            <if test="email!=null and !''.equals(email)">
+                `email`=#{email},
+            </if>
+            <if test="phone!=null and !''.equals(phone)">
+                `phone`=#{phone},
+            </if>
+            <if test="publicKey!=null and !''.equals(publicKey)">
+                publicKey=#{publicKey},
+            </if>
+            <if test="status!=null and status!=0">
+                `status`=#{status}
+            </if>
+        </set>
+        where userName=#{userName}
+    </update>
 </mapper>

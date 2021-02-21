@@ -34,7 +34,7 @@
     <insert id="insertData" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.po.passwordonline.model.AccountInfo">
         insert into account_info(id, userName, systemName, account, password, extra, status)
-        VALUES (null, #{userName}, #{systemName}, #{account}, #{password}, #{extra}, #{status});
+        VALUES (null, #{userName}, #{systemName}, #{account}, #{password}, #{extra}, 1);
     </insert>
 
     <update id="upDateInfo" parameterType="com.po.passwordonline.model.AccountInfo">

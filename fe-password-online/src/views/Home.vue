@@ -20,29 +20,48 @@
           >
             新增
           </div>
-          <div class="s-item cc-display fs-18 ls-4">退出</div>
+          <div
+            class="s-item cc-display fs-18 ls-4"
+            @click="fnToContent('cipher')"
+          >
+            密钥
+          </div>
+          <div class="s-item cc-display fs-18 ls-4" @click="fnLogut">退出</div>
         </div>
       </div>
       <div class="logo cc-display">
-        <img src="@/assets/img/home/mlogo.svg" alt="" />
+        <img
+          src="@/assets/img/home/mlogo.svg"
+          alt=""
+          @click="fnGetAccountList"
+        />
       </div>
       <div class="search cc-display">
-        <LoginInput type="search" class="input" v-model="searchInupt" />
+        <LoginInput
+          type="search"
+          class="input"
+          v-model="searchInupt"
+          placeholder="请输入搜索值"
+          @v-click="fnToSearch"
+        />
       </div>
     </nav>
-
     <router-view :msgList="accountList"></router-view>
+    <Bottom />
   </div>
 </template>
 
 <script>
 import { post_ } from "@/http/api.js";
 import LoginInput from "@/components/common/LoginInput.vue";
+import { fnKeyRead } from "@/http/store.js";
+import Bottom from "@/components/Pages/Details/Bottom.vue";
 
 export default {
   name: "Home",
   components: {
     LoginInput,
+    Bottom,
   },
   data() {
     return {
@@ -59,10 +78,31 @@ export default {
   methods: {
     // 账户信息查询
     fnGetAccountList() {
+      let privateKey = fnKeyRead(this, "privateKey");
+      if (privateKey === "") {
+        this.$message.run("未读入私钥", "error");
+        this.$router.push("/home/" + this.$user.userName + "/cipher");
+        return;
+      }
+      this.$rsa.setPrivateKey(
+        "-----BEGIN RSA PRIVATE KEY-----" +
+          privateKey +
+          "-----END RSA PRIVATE KEY-----"
+      );
+      // 查询加密数据列表
       post_(this.$baseUrl + "api/getListLike", {
         userName: this.$user.userName,
       }).then((res) => {
-        console.log(res);
+        // 数据解密
+        res = res.map((e) => {
+          return {
+            ...e,
+            account: this.$rsa.decrypt(e.account),
+            extra: this.$rsa.decrypt(e.extra),
+            password: this.$rsa.decrypt(e.password),
+            systemName: this.$rsa.decrypt(e.systemName),
+          };
+        });
         this.accountList = res;
         this.accountListCopy = res;
       });
@@ -70,7 +110,7 @@ export default {
 
     // 搜索
     fnSearchInCurrent() {
-      console.log(this.searchInupt.trim());
+      // 页面内数据搜索
       this.accountList = this.accountListCopy.filter((x) => {
         let flag = false;
         for (let i in x) {
@@ -83,18 +123,37 @@ export default {
       });
     },
 
-    // 子菜单
+    // 子菜单是否展示按钮
     fnSonMenuShow() {
       this.sonMenu = !this.sonMenu;
     },
 
-    // 新增条目
+    // 子菜单路由
     fnToContent(val) {
-      this.$router.push("/home/" + this.$user.userName + "/" + val);
+      let toMenu = "/home/" + this.$user.userName + "/" + val;
+      if (this.$route.path !== toMenu) {
+        this.$router.push(toMenu);
+      }
+    },
+
+    // 退出登录
+    fnLogut() {
+      post_(this.$baseUrl + "api/logout").then(() => {
+        this.$router.push("/");
+      });
+    },
+
+    // 搜索框点击事件
+    fnToSearch() {
+      let toMenu = "/home/" + this.$user.userName + "/main";
+      if (this.$route.path !== toMenu) {
+        this.$router.push(toMenu);
+      }
     },
   },
 
   watch: {
+    // 输入变化后进行搜索
     searchInupt(newVal, oldVal) {
       if (newVal !== oldVal && newVal.trim() !== "")
         return this.accountSearch();
@@ -129,6 +188,7 @@ export default {
     position: relative;
     position: sticky;
     top: 0;
+    z-index: 1100;
 
     .menu {
       position: absolute;
@@ -154,7 +214,8 @@ export default {
         width: 100px;
         padding: 10px 0;
         background-color: @menu-bg;
-        box-shadow: 0 0 10px rgb(214, 220, 238);
+        box-shadow: 0 0 6px #aaa;
+        z-index: 1200;
 
         .s-item {
           width: 100%;
@@ -179,6 +240,7 @@ export default {
       img {
         width: 40px;
         height: 40px;
+        cursor: pointer;
       }
     }
 

@@ -5,10 +5,20 @@
         <img src="@/assets/img/login/user.svg" alt="top" />
       </div>
       <div class="item cs-display">
-        <LoginInput type="email" class="input" v-model="userName" />
+        <LoginInput
+          type="email"
+          class="input"
+          v-model="userName"
+          placeholder="请输入用户名"
+        />
       </div>
       <div class="item cs-display">
-        <LoginInput type="password" class="input" v-model="password" />
+        <LoginInput
+          type="password"
+          class="input"
+          v-model="password"
+          placeholder="请输入密码"
+        />
       </div>
       <div class="item cc-display">
         <Button @click="fnLogin">登录</Button>
@@ -72,7 +82,7 @@ export default {
 
   .outside {
     width: 50%;
-    max-width: 700px;
+    max-width: 600px;
     min-width: 500px;
     height: 70%;
     min-height: 400px;

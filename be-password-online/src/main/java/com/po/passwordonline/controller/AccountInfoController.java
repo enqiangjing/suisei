@@ -2,10 +2,13 @@ package com.po.passwordonline.controller;
 
 
 import com.po.passwordonline.mapper.AccountInfoMapper;
+import com.po.passwordonline.mapper.UsersMapper;
 import com.po.passwordonline.model.AccountInfo;
+import com.po.passwordonline.model.Users;
 import com.po.passwordonline.utils.ResMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,16 @@ public class AccountInfoController {
     @Autowired
     public void setAccountInfoMapper(AccountInfoMapper accountInfoMapper) {
         this.accountInfoMapper = accountInfoMapper;
+    }
+
+    /**
+     * 用户查询接口
+     */
+    private UsersMapper usersMapper;
+
+    @Autowired
+    public void setUsersMapper(UsersMapper usersMapper) {
+        this.usersMapper = usersMapper;
     }
 
     /**
@@ -124,6 +137,43 @@ public class AccountInfoController {
         accountInfoMapper.upDateInfo(accountInfo);
 
         log.info("更新id：{}", accountInfo.getId());
+
+        return resMessage.sysSuccess();
+    }
+
+    /**
+     * @param request 请求
+     * @param usersIn 用户信息
+     * @return 操作结果
+     */
+    @RequestMapping("upDateUser")
+    @ResponseBody
+    public String upDateUser(HttpServletRequest request, @RequestBody Users usersIn) {
+        ResMessage resMessage = new ResMessage();
+
+        HttpSession session = request.getSession(); // 获取浏览器Session
+        String userInfo = (String) session.getAttribute("userInfo"); // 取的userInfo中的用户信息
+        String[] users = userInfo.split(",");
+
+        usersMapper.upDateUser(usersIn);
+
+        log.info("更新用户：{}", usersIn.getUserName());
+
+        return resMessage.sysSuccess();
+    }
+
+    /**
+     * 退出
+     *
+     * @param session session
+     * @return 结果
+     */
+    @RequestMapping("logout")
+    @ResponseBody
+    public String logout(HttpSession session) {
+        ResMessage resMessage = new ResMessage();
+
+        session.invalidate();
 
         return resMessage.sysSuccess();
     }

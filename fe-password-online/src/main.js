@@ -5,6 +5,9 @@ import "./assets/base.less";
 import message from "@/components/common/Message.js";
 import { localData } from "@/http/store.js";
 import _ from "lodash";
+import clipboard from 'clipboard';
+import JSEncrypt from "jsencrypt";
+const encrypt = new JSEncrypt();
 
 // 误发布
 Vue.config.productionTip = false;
@@ -26,6 +29,17 @@ Vue.prototype.$baseUrl =
 
 // lodash
 Vue.prototype._ = _;
+
+// RSA
+Vue.prototype.$rsa = encrypt;
+Vue.prototype.$privateKey = "";
+Vue.prototype.$publicKey = "";
+
+// 内容复制
+Vue.prototype.$clipboard = clipboard;
+
+// 修改的内容
+Vue.prototype.$editItem = {};
 
 // Vue对象
 new Vue({

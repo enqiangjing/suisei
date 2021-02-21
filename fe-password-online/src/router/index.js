@@ -30,24 +30,17 @@ const routes = [
         component: () => import(/* webpackChunkName: "homeContent" */ '../components/Pages/Home/Content.vue'),
       },
       {
-        path: '/details/',
-        name: 'Details',
-        component: function () {
-          return import(/* webpackChunkName: "details" */ '../views/Details.vue')
-        },
-        children: [
-          {
-            path: 'item',
-            name: 'Item',
-            component: function () {
-              return import(/* webpackChunkName: "detailsItem" */ '../components/Pages/Details/Item.vue')
-            },
-
-          }
-        ],
-      }
+        path: 'edit',
+        name: 'HomeContentEdit',
+        component: () => import(/* webpackChunkName: "homeContentEdit" */ '../components/Pages/Home/Content.vue'),
+      },
+      {
+        path: 'cipher',
+        name: 'HomeCipher',
+        component: () => import(/* webpackChunkName: "homeCipher" */ '../components/Pages/Home/Cipher.vue'),
+      },
     ]
-  }
+  },
 ]
 
 // 初始化路由对象
@@ -58,11 +51,18 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
-  // ...
-  console.log(to);
-  console.log(from);
-  next();
-})
+// router.beforeEach((to, from, next) => {
+//   // ...
+//   console.log(to);
+//   // console.log(from);
+//   // next();
+//   if (to.name === 'Login') {
+//     next(vm => {
+//       console.log(vm.$user);
+//     })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

@@ -1,4 +1,5 @@
-import service from "./request.js"
+import service from "./request.js";
+import message_ from "@/components/common/Message.js";
 
 // get
 export function get_(api, params, url) {
@@ -22,7 +23,10 @@ export function post_(api, data, url) {
         baseURL: url,
         headers: { 'Content-Type': 'application/json' },
         data: data
-    }).then(response => response.data).catch((err) => {
+    }).then(response => {
+        message_.run(response.errMsg, response.errCode)
+        return response.data
+    }).catch((err) => {
         console.log(err)
     })
 }

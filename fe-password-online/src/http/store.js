@@ -20,3 +20,16 @@ export function sessionData(type = 'local', value = true) {
     if (value) return JSON.parse(sessionStorage.getItem(type));
     return sessionStorage.getItem(type);
 }
+
+const fnKeyRead = (context, val) => {
+    if (val === 'publicKey') {
+        if (context.$pbulicKey && context.$pbulicKey !== '') return context.$pbulicKey;
+        if (context.$user.publicKey && context.$user.publicKey !== '') return context.$user.publicKey;
+        return sessionData('publicKey', false) || '';
+    }
+
+    if (context.$privateKey && context.$privateKey !== '') return context.$privateKey;
+    return sessionData('privateKey', false) || '';
+}
+
+export { fnKeyRead };

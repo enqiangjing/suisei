@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 // 创建axios
 const service = axios.create();

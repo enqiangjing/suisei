@@ -9,7 +9,15 @@ public class Users {
     private String email;
     private String phone;
     private long status;
+    private String publicKey;
 
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
 
     public long getId() {
         return id;
