@@ -46,5 +46,6 @@ export default {
   span {
     color: #409eff;
   }
+  
 }
 </style>
