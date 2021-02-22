@@ -1,5 +1,9 @@
 <template>
   <div class="login">
+    <div class="logo sc-display">
+      <img src="@/assets/lt.png" />
+      <span class="fs-20 fw-6 ls-2">在线密码管理系统</span>
+    </div>
     <Box />
     <Bootom />
   </div>
@@ -27,5 +31,20 @@ export default {
   height: 100%;
   width: 100%;
   background: url(../assets/logo.png) no-repeat top center;
+}
+
+.logo {
+  width: 300px;
+  height: 80px;
+  padding: 0 0 0 20px;
+
+  img {
+    width: 32px;
+    margin-right: 10px;
+  }
+
+  span {
+    color: #409eff;
+  }
 }
 </style>
