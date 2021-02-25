@@ -27,3 +27,5 @@ pnpm-debug.log*
 
 # config file
 *.properties
+
+unpackage
