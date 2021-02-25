@@ -17,16 +17,14 @@
 					<view class="left ec-display fs-14 fw-6">用户号：</view>
 					<view class="right sc-display fs-14">
 						{{ item.account }}
-						<image src="/static/img/home/copy.svg" data-clipboard-action="copy" :class="'userName' + item.id"
-						 :data-clipboard-text="item.account" @click="copyLink('userName' + item.id)" />
+						<image src="/static/img/home/copy.svg" @click="copyLink(item.account)" class="br-4" />
 					</view>
 				</view>
 				<view class="item cc-display">
 					<view class="left ec-display fs-14 fw-6">密码：</view>
 					<view class="right sc-display fs-14">
 						{{ item.password.charAt(0) + "******" + item.password.charAt(item.password.length - 1) }}
-						<image src="/statix/img/home/copy.svg" data-clipboard-action="copy" :class="'password' + item.id"
-						 :data-clipboard-text="item.password" @click="copyLink('password' + item.id)" />
+						<image src="/static/img/home/copy.svg" @click="copyLink(item.password)" class="br-4" />
 					</view>
 				</view>
 				<view class="item cc-display">
@@ -54,14 +52,12 @@
 		methods: {
 			// 复制
 			copyLink(val) {
-				let _this = this;
-				let clipboard = new this.$clipboard("." + val);
-				clipboard.on("success", function() {
-					_this.$message.run("复制成功");
-				});
-				clipboard.on("error", function() {
-					_this.$message("复制失败", "error");
-				});
+				uni.setClipboardData({
+					data: val,
+					success: function() {
+						console.log('copy success');
+					}
+				});;
 			},
 
 			// edit
