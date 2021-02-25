@@ -65,7 +65,7 @@
 import { sessionStore } from "@/http/store.js";
 
 export default {
-  name: "Content",
+  name: "Main",
   props: ["msgList"],
   data() {
     return {
