@@ -10,6 +10,7 @@
 			</view>
 			<view class="one-line cc-display">
 				<Button @click="fileLoad('publicKey')">加载</Button>
+				<tki-file-manager ref="filemanager" @result="resultPath"></tki-file-manager>
 				<Button @click="fnSave()" style="margin-left:10px">保存</Button>
 			</view>
 
@@ -35,6 +36,7 @@
 		},
 		data() {
 			return {
+				keyType: "",
 				privateKeyMsg: "请先加载私钥！",
 			};
 		},
@@ -49,7 +51,6 @@
 		methods: {
 			// 公钥保存
 			fnSave() {
-				console.log(this.$store.state.publicKey);
 				uni.request({
 					url: this.$baseUrl + 'api/upDateUser', //仅为示例，并非真实接口地址。
 					method: 'POST',
@@ -78,12 +79,49 @@
 				});
 			},
 
-			// 打开文件选择器
-			fileLoad(val) {
-				this.fnReadFile(val);
+			// 文件读取 安卓 
+			resultPath(filePath) {
+				const self = this;
+				plus.io.requestFileSystem(plus.io.PUBLIC_DOCUMENTS, function(fobject) {
+					// fs.root是根目录操作对象DirectoryEntry
+					fobject.root.getFile(filePath, {
+						create: true
+					}, function(fileEntry) {
+						fileEntry.file(function(file) {
+							var fileReader = new plus.io.FileReader();
+							fileReader.readAsText(file, 'utf-8');
+							fileReader.onloadend = function(evt) {
+								if (self.keyType === "publicKey") {
+									self.$store.commit("upPublicKey", evt.target.result);
+									uni.showToast({
+										title: '公钥加载成功！',
+										icon: 'success',
+										duration: 2000,
+									});
+								} else {
+									self.$store.commit("upPrivateKey", evt.target.result);
+									self.privateKeyMsg = "私钥已加载完成！"
+									uni.showToast({
+										title: '私钥加载成功！',
+										icon: 'success',
+										duration: 2000,
+									});
+								}
+							}
+						});
+					});
+				});
 			},
 
-			// 文件读取
+			// 打开文件选择器
+			fileLoad(val) {
+				// 密钥类型
+				this.keyType = val;
+				// 安卓文件选择器
+				this.$refs.filemanager._openFile();
+			},
+
+			// 文件读取（安卓固定目录读取）--- 废弃
 			fnReadFile(val) {
 				const self = this;
 				// 请求本地系统文件对象 plus.io.PRIVATE_WWW：应用运行资源目录常量
@@ -101,7 +139,7 @@
 									uni.showToast({
 										title: '公钥加载成功！',
 										icon: 'success',
-										duration: 2000,
+										duration: 1200,
 									});
 								} else {
 									self.$store.commit("upPrivateKey", evt.target.result);
@@ -109,7 +147,7 @@
 									uni.showToast({
 										title: '私钥加载成功！',
 										icon: 'success',
-										duration: 2000,
+										duration: 1200,
 									});
 								}
 							}

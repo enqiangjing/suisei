@@ -1,48 +1,42 @@
 <template>
-	<main class="cc-display">
-		<div class="no-data cc-display common-bg-r85 br-20" v-if="list.length === 0">
+	<view class="main cc-display">
+		<view class="no-data cc-display common-bg-r85 br-20" v-if="list.length === 0">
 			<image src="/static/img/details/no_data.svg" alt="无数据" />
 			<span class="fs-20 ls-8">还没有账号数据~~~</span>
-		</div>
-		<ul v-else>
-			<li v-for="(item, index) in list" :key="index" class="common-bg-r85 br-8">
+		</view>
+		<view class="ul" v-else>
+			<view v-for="(item, index) in list" :key="item.id" class="common-bg-r85 br-8 li">
 				<image class="edit" src="/static/img/home/edit.svg" alt="修改" @click="fnToEdit(item)" />
-				<div class="item cc-display">
-					<div class="left ec-display fs-14 fw-6">系统名：</div>
-					<div class="right sc-display fs-14">
+				<view class="item cc-display">
+					<view class="left ec-display fs-14 fw-6">系统名：</view>
+					<view class="right sc-display fs-14">
 						{{ item.systemName }}
-					</div>
-				</div>
-				<div class="item cc-display">
-					<div class="left ec-display fs-14 fw-6">用户号：</div>
-					<div class="right sc-display fs-14">
-						{{ item.account
-            }}
+					</view>
+				</view>
+				<view class="item cc-display">
+					<view class="left ec-display fs-14 fw-6">用户号：</view>
+					<view class="right sc-display fs-14">
+						{{ item.account }}
 						<image src="/static/img/home/copy.svg" data-clipboard-action="copy" :class="'userName' + item.id"
 						 :data-clipboard-text="item.account" @click="copyLink('userName' + item.id)" />
-					</div>
-				</div>
-				<div class="item cc-display">
-					<div class="left ec-display fs-14 fw-6">密码：</div>
-					<div class="right sc-display fs-14">
-						{{
-              item.password.charAt(0) +
-                "******" +
-                item.password.charAt(item.password.length - 1)
-            }}
+					</view>
+				</view>
+				<view class="item cc-display">
+					<view class="left ec-display fs-14 fw-6">密码：</view>
+					<view class="right sc-display fs-14">
+						{{ item.password.charAt(0) + "******" + item.password.charAt(item.password.length - 1) }}
 						<image src="/statix/img/home/copy.svg" data-clipboard-action="copy" :class="'password' + item.id"
 						 :data-clipboard-text="item.password" @click="copyLink('password' + item.id)" />
-					</div>
-				</div>
-				<div class="item cc-display">
-					<div class="left ec-display fs-14 fw-6">其他信息：</div>
-					<div class="right sc-display fs-14">
-						{{ item.extra }}
-					</div>
-				</div>
-			</li>
-		</ul>
-	</main>
+					</view>
+				</view>
+				<view class="item cc-display">
+					<view class="left ec-display fs-14 fw-6">其他信息：</view>
+					<view class="right sc-display fs-14">{{ item.extra }}</view>
+				</view>
+			</view>
+			<view class="common-bg-r85 br-8 li"></view>
+		</view>
+	</view>
 </template>
 
 <script>
@@ -89,16 +83,14 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-	main {
+	.main {
 		width: 100%;
 
-		ul {
+		.ul {
 			width: 90%;
-			list-style: none;
 
-			li {
+			.li {
 				position: relative;
-				list-style: none;
 				height: 120px;
 				margin-top: 30px;
 				box-shadow: 0 0 4px #999;
