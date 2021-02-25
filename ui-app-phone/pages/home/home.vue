@@ -22,6 +22,10 @@
 				accountListCopy: [],
 			};
 		},
+		created() {
+			this.fnGetAccountList();
+			this.accountSearch = _.debounce(this.fnSearchInCurrent, 500);
+		},
 		methods: {
 			// 账户信息查询
 			fnGetAccountList() {
@@ -60,8 +64,7 @@
 									systemName: this.$rsa.decrypt(e.systemName),
 								};
 							});
-							console.log(this.accountList)
-							this.accountListCopy = Object.assign({}, this.accountList);
+							this.accountListCopy = this.accountList;
 							uni.showToast({
 								title: '查询成功！',
 								icon: 'none',
@@ -77,7 +80,29 @@
 					}
 				});
 			},
-		}
+			// 搜索
+			fnSearchInCurrent() {
+				// 页面内数据搜索
+				this.accountList = this.accountListCopy.filter((x) => {
+					let flag = false;
+					for (let i in x) {
+						if (String(x[i]).includes(this.searchInupt)) {
+							flag = true;
+							break;
+						}
+					}
+					return flag;
+				});
+			},
+		},
+		watch: {
+		    // 输入变化后进行搜索
+		    searchInupt(newVal, oldVal) {
+		      if (newVal !== oldVal && newVal.trim() !== "")
+		        return this.accountSearch();
+		      this.accountList = this.accountListCopy;
+		    },
+		  },
 	}
 </script>
 

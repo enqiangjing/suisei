@@ -32,7 +32,7 @@
 					<view class="right sc-display fs-14">{{ item.extra }}</view>
 				</view>
 			</view>
-			<view class="common-bg-r85 br-8 li"></view>
+			<view class="pad-android"></view>
 		</view>
 	</view>
 </template>
@@ -79,6 +79,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+	.pad-android {
+		position: relative;
+		height: 150px;
+		margin-top: 30px;
+		padding: 10px 0;
+	}
+
 	.main {
 		width: 100%;
 
