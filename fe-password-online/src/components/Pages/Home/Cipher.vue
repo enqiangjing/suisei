@@ -5,7 +5,7 @@
       <div class="more-line cc-display">
         <Textarea class="textarea" v-model="publicKey" />
       </div>
-      <div style="display:none">
+      <div style="display: none">
         <input
           type="file"
           id="files_publicKey"
@@ -13,23 +13,23 @@
         />
       </div>
       <div class="one-line cc-display">
-        <Button @click="fileLoad('files_publicKey')">选取</Button>
-        <Button @click="fnSave('temporary')" style="margin-left:10px"
+        <Button @click="fileLoad('files_publicKey')">加载</Button>
+        <!-- <Button @click="fnSave('temporary')" style="margin-left:10px"
           >暂存</Button
-        >
-        <Button @click="fnSave('forever')" style="margin-left:10px"
+        > -->
+        <Button @click="fnSave('forever')" style="margin-left: 10px"
           >保存</Button
         >
-        <Button @click="fnKeyLoad('other')" style="margin-left:10px"
+        <!-- <Button @click="fnKeyLoad('other')" style="margin-left:10px"
           >加载</Button
-        >
+        > -->
       </div>
 
       <div class="line"></div>
 
       <div class="one-line cc-display fs-20 ls-8 fw-6 color-primary">私钥</div>
       <div class="one-line cc-display fs-18">{{ privateKeyMsg }}</div>
-      <div style="display:none">
+      <div style="display: none">
         <input
           type="file"
           id="files_privateKey"
@@ -37,8 +37,8 @@
         />
       </div>
       <div class="one-line cc-display">
-        <Button @click="fileLoad('files_privateKey')">选取</Button>
-        <Button @click="fnUse" style="margin-left:10px">加载</Button>
+        <Button @click="fileLoad('files_privateKey')">加载</Button>
+        <!-- <Button @click="fnUse" style="margin-left:10px">加载</Button> -->
       </div>
     </div>
   </div>
@@ -63,12 +63,15 @@ export default {
   },
   data() {
     return {
-      publicKey: "",
-      privateKey: "",
       privateKeyMsg: "请先加载私钥！",
     };
   },
   created() {},
+  computed: {
+    publicKey() {
+      return this.$store.state.publicKey;
+    },
+  },
   methods: {
     // 公钥保存
     fnSave(val) {
@@ -106,16 +109,14 @@ export default {
       let selectedFile = document.getElementById("files_" + val).files[0];
       let reader = new FileReader();
       reader.readAsText(selectedFile);
-      reader.onload = function() {
+      reader.onload = function () {
         if (val === "publicKey") {
-          self.publicKey = this.result; // 读取完成
-          sessionStore("publicKey", this.result);
-          self.$publicKey = this.result;
+          // self.publicKey = this.result; // 读取完成
+          self.$store.commit("upPublicKey", this.result);
         } else {
-          self.privateKey = this.result; // 读取完成
+          // self.privateKey = this.result; // 读取完成
           self.privateKeyMsg = "私钥文件应用成功！";
-          sessionStore("privateKey", this.result);
-          self.$privateKey = this.result;
+          self.$store.commit("upPrivateKey", this.result);
         }
       };
     },

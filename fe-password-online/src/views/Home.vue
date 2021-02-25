@@ -54,7 +54,7 @@
 <script>
 import { post_ } from "@/http/api.js";
 import LoginInput from "@/components/common/LoginInput.vue";
-import { fnKeyRead } from "@/http/store.js";
+import { localStore } from "@/http/store.js";
 import Bottom from "@/components/Pages/Details/Bottom.vue";
 
 export default {
@@ -78,20 +78,19 @@ export default {
   methods: {
     // 账户信息查询
     fnGetAccountList() {
-      let privateKey = fnKeyRead(this, "privateKey");
-      if (privateKey === "") {
+      if (this.$store.state.privateKey === "") {
         this.$message.run("未读入私钥", "error");
-        this.$router.push("/home/" + this.$user.userName + "/cipher");
+        this.$router.push("/home/" + this.$store.state.userName + "/cipher");
         return;
       }
       this.$rsa.setPrivateKey(
         "-----BEGIN RSA PRIVATE KEY-----" +
-          privateKey +
+          this.$store.state.privateKey +
           "-----END RSA PRIVATE KEY-----"
       );
       // 查询加密数据列表
       post_(this.$baseUrl + "api/getListLike", {
-        userName: this.$user.userName,
+        userName: this.$store.state.userName,
       }).then((res) => {
         // 数据解密
         res = res.map((e) => {
@@ -130,7 +129,7 @@ export default {
 
     // 子菜单路由
     fnToContent(val) {
-      let toMenu = "/home/" + this.$user.userName + "/" + val;
+      let toMenu = "/home/" + this.$store.state.userName + "/" + val;
       if (this.$route.path !== toMenu) {
         this.$router.push(toMenu);
       }
@@ -140,12 +139,16 @@ export default {
     fnLogut() {
       post_(this.$baseUrl + "api/logout").then(() => {
         this.$router.push("/");
+        this.$store.commit("upUserInfo", {});
+        this.$store.commit("upPrivateKey", "");
+        this.$store.commit("upLogStatus", false);
+        localStore("poUserInfo", "");
       });
     },
 
     // 搜索框点击事件
     fnToSearch() {
-      let toMenu = "/home/" + this.$user.userName + "/main";
+      let toMenu = "/home/" + this.$store.state.userName + "/main";
       if (this.$route.path !== toMenu) {
         this.$router.push(toMenu);
       }

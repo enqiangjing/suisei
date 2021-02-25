@@ -3,7 +3,7 @@ module.exports = {
     proxy: {
       //配置多个跨域
       "/login": {
-        target: "http://localhost:9602/",
+        target: "http://212.64.59.206:9602/",
         changeOrigin: true,
         // ws: true,//websocket支持
         secure: false,
@@ -12,7 +12,7 @@ module.exports = {
         }
       },
       "/api": {
-        target: "http://localhost:9602/api",
+        target: "http://212.64.59.206:9602/api",
         changeOrigin: true,
         //ws: true,//websocket支持
         secure: false,

@@ -39,8 +39,8 @@
           <div class="right sc-display fs-14">
             {{
               item.password.charAt(0) +
-                "******" +
-                item.password.charAt(item.password.length - 1)
+              "******" +
+              item.password.charAt(item.password.length - 1)
             }}<img
               src="@/assets/img/home/copy.svg"
               data-clipboard-action="copy"
@@ -80,18 +80,19 @@ export default {
     copyLink(val) {
       let _this = this;
       let clipboard = new this.$clipboard("." + val);
-      clipboard.on("success", function() {
+      clipboard.on("success", function () {
         _this.$message.run("复制成功");
       });
-      clipboard.on("error", function() {
+      clipboard.on("error", function () {
         _this.$message("复制失败", "error");
       });
     },
 
     // edit
     fnToEdit(item) {
-      sessionStore("editItem", item);
-      this.$router.push("/home/" + this.$user.userName + "/edit");
+      this.$store.commit("upEditItem", item);
+      this.$store.commit("upEditStatus", true);
+      this.$router.push("/home/" + this.$store.state.userName + "/edit");
     },
   },
   watch: {

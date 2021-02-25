@@ -1,6 +1,17 @@
 <template>
   <div class="box ce-display">
-    <div class="outside">
+    <div class="outside" v-if="isLogin">
+      <div class="top cc-display">
+        <img src="@/assets/img/login/user.svg" alt="top" />
+      </div>
+      <div class="item cs-display">
+        {{ currentUser }}
+      </div>
+      <div class="item cc-display">
+        <Button @click="fnLogOut">退出</Button>
+      </div>
+    </div>
+    <div class="outside" v-else>
       <div class="top cc-display">
         <img src="@/assets/img/login/user.svg" alt="top" />
       </div>
@@ -31,7 +42,7 @@
 import LoginInput from "@/components/common/LoginInput.vue";
 import Button from "@/components/common/Button.vue";
 import { post_ } from "@/http/api.js";
-import { localStore, localData } from "@/http/store.js";
+import { localStore } from "@/http/store.js";
 
 export default {
   name: "Box",
@@ -44,6 +55,14 @@ export default {
   },
   data() {
     return { userName: "", password: "" };
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    },
+    currentUser() {
+      return this.$store.state.userName;
+    },
   },
   methods: {
     // 登录请求发送
@@ -63,10 +82,22 @@ export default {
         password: this.password,
       }).then((res) => {
         // 用户信息挂载到全局
-        localStore("user", res);
-        this.$user = res;
+        localStore("poUserInfo", res);
+        this.$store.commit("upUserInfo", res);
+        this.$store.commit("upLogStatus", true);
         // 路由跳转
         this.$router.push("/home/" + res.userName + "/main");
+      });
+    },
+
+    // 退出登录
+    fnLogOut() {
+      post_(this.$baseUrl + "api/logout").then(() => {
+        this.$router.push("/");
+        this.$store.commit("upUserInfo", {});
+        this.$store.commit("upPrivateKey", "");
+        this.$store.commit("upLogStatus", false);
+        localStore("poUserInfo", "");
       });
     },
   },
@@ -78,7 +109,6 @@ export default {
 .box {
   width: 100%;
   height: 50%;
-  background-color: rgab(255, 255, 255, 0.5);
 
   .outside {
     width: 50%;

@@ -70,8 +70,12 @@ export default {
     };
   },
   created() {
-    if (this.$route.name === "HomeContentEdit") {
-      let itemInfo = sessionData("editItem");
+    if (
+      this.$route.name === "HomeContentEdit" &&
+      this.$store.state.editStatus
+    ) {
+      this.$store.commit("upEditStatus", false);
+      let itemInfo = this.$store.state.editItem;
       this.systemName = itemInfo.systemName;
       this.account = itemInfo.account;
       this.password = itemInfo.password;
@@ -82,20 +86,21 @@ export default {
   },
   methods: {
     fnSave() {
-      let publicKey = fnKeyRead(this, "publicKey");
-      if (publicKey === "") {
+      if (this.$store.state.publicKey === "") {
         this.$message.run("未读入公钥", "error");
         this.$router.push("/home/" + this.$user.userName + "/cipher");
         return;
       }
       // 加密
       this.$rsa.setPublicKey(
-        "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----"
+        "-----BEGIN PUBLIC KEY-----" +
+          this.$store.state.publicKey +
+          "-----END PUBLIC KEY-----"
       );
 
       // 保存
       let sendData = {
-        userName: this.$user.userName,
+        userName: this.$store.state.userName,
         systemName: this.$rsa.encrypt(this.systemName),
         account: this.$rsa.encrypt(this.account),
         password: this.$rsa.encrypt(this.password),

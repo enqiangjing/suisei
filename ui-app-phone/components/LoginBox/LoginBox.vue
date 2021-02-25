@@ -53,12 +53,20 @@
 			fnLogin() {
 				let userName = this.userName;
 				if (userName === "") {
-					this.$message.run("用户名未输入！", "warning");
+					uni.showToast({
+						title: '用户名未输入！',
+						icon: 'none',
+						duration: 2000,
+					});
 					return;
 				}
 				let password = this.password;
 				if (password === "") {
-					this.$message.run("密码未输入！", "warning");
+					uni.showToast({
+						title: '密码未输入！',
+						icon: 'none',
+						duration: 2000,
+					});
 					return;
 				}
 				// 请求发送
