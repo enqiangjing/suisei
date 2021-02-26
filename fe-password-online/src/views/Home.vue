@@ -144,7 +144,7 @@ export default {
         this.$store.commit("upPrivateKey", ""); // 清除内存用户信息
         this.$store.commit("upLogStatus", false); // 清除用户登录状态
         localStore("poUserInfo", ""); // 清除本地用户信息
-        localStor("poPrivateKey", ""); // 清除本地私钥
+        localStore("poPrivateKey", ""); // 清除本地私钥
       });
     },
 
