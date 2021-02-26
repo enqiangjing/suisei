@@ -93,11 +93,11 @@ export default {
     // 退出登录
     fnLogOut() {
       post_(this.$baseUrl + "api/logout").then(() => {
-        this.$router.push("/");
-        this.$store.commit("upUserInfo", {});
-        this.$store.commit("upPrivateKey", "");
-        this.$store.commit("upLogStatus", false);
-        localStore("poUserInfo", "");
+        this.$store.commit("upUserInfo", {}); // 清除内存用户信息
+        this.$store.commit("upPrivateKey", ""); // 清除内存用户信息
+        this.$store.commit("upLogStatus", false); // 清除用户登录状态
+        localStore("poUserInfo", ""); // 清除本地用户信息
+        localStor("poPrivateKey", ""); // 清除本地私钥
       });
     },
   },
