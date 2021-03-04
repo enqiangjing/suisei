@@ -67,7 +67,11 @@ export default {
     };
   },
   created() {
-    if (this.$store.state.isLogin) {
+    if (
+      this.$store.privateKey &&
+      this.$store.state.isLogin &&
+      this.$store.privateKey !== ""
+    ) {
       this.privateKeyMsg = "私钥已缓存！";
     }
   },
@@ -104,12 +108,12 @@ export default {
       reader.onload = function () {
         if (val === "publicKey") {
           let localUser = localData("poUserInfo");
-          localUser.publicKey = this.result;
+          localUser.publicKey = this.result.replace(/[\r\n]/g, "");
           localStore("poUserInfo", localUser); // 私钥写入本地
           self.$store.commit("upPublicKey", this.result); // 公钥写入内容
         } else {
           self.privateKeyMsg = "私钥文件应用成功！";
-          self.$store.commit("upPrivateKey", this.result); // 私钥写入内存
+          self.$store.commit("upPrivateKey", this.result.replace(/[\r\n]/g, "")); // 私钥写入内存
           localStore("poPrivateKey", this.result); // 本地存储私钥
         }
       };
