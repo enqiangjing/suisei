@@ -17,6 +17,7 @@
 ### 安装教程
 
 - 前端代码目录： ./fe-password-online，详见目录下 readme
+- 移动端代码
 - 后端代码目录： ./be-password-online，详见目录下 readme
 
 ### 使用说明
